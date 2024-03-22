@@ -1,0 +1,46 @@
+def create_assistant():
+  assistant = openai_assistants.create(
+    name="Bác sĩ",
+    instructions="Bạn là một trợ lý tư vấn về sức khỏe. Bạn sẽ giúp người dùng giải thích các vấn đề sức khỏe và đưa ra giải pháp.",
+    tools=[],
+    model=model,
+  )
+
+  return assistant
+
+def ask_assistant(user_question, thread, assistant):
+  # Pass in the user question into the existing thread
+  openai_threads.messages.create(
+    thread_id=thread.id,
+    role="user",
+    content=user_question,
+  )
+  #
+  # Use runs to wait for the assistant response
+  run = openai_threads.runs.create(
+    thread_id=thread.id,
+    assistant_id=assistant.id,
+    instructions=f'Lưu ý rằng người dùng không có kiến thức về y học, đặc biệt là vấn đề sức khỏe nên hãy giải thích câu trả lời một cách chi tiết và đơn giản.Giới hạn là 100 tokens'
+  )
+
+  is_running = True
+  while is_running:
+    run_status = openai_threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
+    is_running = run_status.status != "completed"
+    time.sleep(1)
+
+  return run
+
+def assistant_response(thread, run):
+  # Get the messages list from the thread
+  # history
+  messages = openai_threads.messages.list(thread_id=thread.id)
+  # print(messages.data)
+  # Get the last message for the current run
+  last_message = [message for message in messages.data if message.run_id == run.id and message.role == "assistant"][-1]
+  # If an assistant message is found, print it
+  if last_message:
+    response = f"[Bs.GPT]: {last_message.content[0].text.value}"
+  else:
+    response = f"[Bs.GPT]: Xin lỗi, Tôi không chắc rằng có thể trả lời câu hỏi đó. Bạn có thể hỏi một câu khác được không?"
+  return response
