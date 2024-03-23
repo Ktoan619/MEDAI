@@ -1,3 +1,20 @@
+!pip install openai==1.2.0
+!pip install --upgrade openapi
+import os
+import time
+import openai
+#print(openai.VERSION)
+from openai import OpenAI
+
+model = "gpt-3.5-turbo-1106"
+#openai.api_key = "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"
+
+os.environ["OPENAI_API_KEY"] = "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"
+
+#openai_client = openai.OpenAI(api_key=get_openai_key())
+openai_client = OpenAI()
+openai_threads = openai_client.beta.threads
+openai_assistants = openai_client.beta.assistants
 def create_assistant():
   assistant = openai_assistants.create(
     name="Bác sĩ",
@@ -44,9 +61,17 @@ def assistant_response(thread, run):
   else:
     response = f"[Bs.GPT]: Xin lỗi, Tôi không chắc rằng có thể trả lời câu hỏi đó. Bạn có thể hỏi một câu khác được không?"
   return response
+assistant = create_assistant()
+thread = openai_threads.create()
+
 def gpt_response(message,history):
 
   user_question = message
   run = ask_assistant(user_question, thread, assistant)
   response = assistant_response(thread, run)
   return response
+def create_ChatBot_tab() :
+  demo = gr.ChatInterface(fn=gpt_response, examples=["sùi mào gà", "đau bụng", "đau đầu", "mụn"], title="Bs.GPT",
+                          description = "Trợ lý ảo - tư vấn sức khỏe", theme = "soft", submit_btn = "Gửi", retry_btn = "Thử lại",
+                          undo_btn = "Quay lại", clear_btn = "Xóa toàn bộ", stop_btn = "Tạm dừng")
+  return demo
