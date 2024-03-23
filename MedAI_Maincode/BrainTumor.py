@@ -1,6 +1,6 @@
 def generateBrainTumorAI():
   pipe = pipeline("object-detection", model="DunnBC22/yolos-tiny-Brain_Tumor_Detection")
-def Processing({Image, pipe}):
+def Processing([Image, pipe]):
   Color_List = ["purple", "yellow", "blue"]
 
   data = pipe(Image)
