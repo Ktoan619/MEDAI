@@ -7,7 +7,7 @@ from datasets import load_dataset
 data = load_dataset("Francesco/brain-tumor-m2pbp")
 pipe = pipeline("object-detection", model="DunnBC22/yolos-tiny-Brain_Tumor_Detection")
 
-def Processing(Image, pipe) :
+def Processing(Image) :
   Color_List = ["purple", "yellow", "blue"]
 
   data = pipe(Image)
@@ -26,7 +26,7 @@ def Processing(Image, pipe) :
 
   return Image
   
-  def create_brain_tumor_detec() :
+  def create_brain_tumor_detect() :
   with gr.Blocks() as Brain_Tumor_Detect:
       gr.Markdown("Cùng kiểm tra xem bạn có khối u não không nào =)))")
       with gr.Row():
