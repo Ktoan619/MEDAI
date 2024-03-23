@@ -44,3 +44,9 @@ def assistant_response(thread, run):
   else:
     response = f"[Bs.GPT]: Xin lỗi, Tôi không chắc rằng có thể trả lời câu hỏi đó. Bạn có thể hỏi một câu khác được không?"
   return response
+def gpt_response(message,history):
+
+  user_question = message
+  run = ask_assistant(user_question, thread, assistant)
+  response = assistant_response(thread, run)
+  return response
