@@ -1,79 +1,83 @@
+import numpy as np
+from PIL import Image
+import io
 
+trans_disease = {
+    "acne": "mụn",
+    "actinic_keratosis": "chứng dày sừng quang hóa",
+    "alopecia_androgenetica": "chứng rụng tóc nội tiết tố androgen",
+    "alopecia_areata": "chứng rụng tóc từng vùng",
+    "bullous_dermatosis": "bệnh da bọng nước",
+    "chloasma": "nám da",
+    "corn": "chứng chai da",
+    "dermatofibroma": "u xơ da",
+    "eczema_dermatitis": "viêm da chàm",
+    "erysipelas": "viêm quầng",
+    "erythema_multiforme": "ban đỏ đa dạng",
+    "folliculitis": "viêm nang lông",
+    "furuncle": "mụn nhọt",
+    "haemangioma": "bệnh u máu",
+    "herpes": "mụn rộp",
+    "herpes_simplex": "nhiễm trùng do virus Herpes Simplex",
+    "iga_vasculitis": "viêm mạch máu Iga",
+    "keloid": "sẹo lồi",
+    "keratosis_follicularism": "bệnh nang lông dày sừng",
+    "lichen_planus": "bệnh lichen phẳng",
+    "lupus_erythematosus": "bệnh ban đỏ",
+    "molluscum_contagiosum": "u mềm lây",
+    "nevus": "nốt ruồi",
+    "paronychia": "viêm quanh móng",
+    "pityriasis_alba": "bệnh vẩy phấn trắng",
+    "pityriasis_rosea": "bệnh vảy phấn hồng",
+    "prurigo_nodularis": "bệnh sẩn ngứa",
+    "psoriasis": "bệnh vẩy nến",
+    "rosacea": "bệnh trứng cá đỏ rosacea",
+    "sebaceous_cyst": "u nang bã nhờn",
+    "sebaceousnevus": "bớt tuyến bã",
+    "seborrheic_dermatitis": "viêm da tiết bã",
+    "seborrheic_keratosis": "chứng dày sừng tiết bã",
+    "skin_tag": "mụn thịt dư",
+    "stasis_dermatitis": "viêm da ứ đọng",
+    "syringoma": "u ống tuyến mồ hôi",
+    "tinea_capitis": "nấm da đầu",
+    "tinea_corporis": "nấm cơ thể",
+    "tinea_cruris": "nấm bẹn",
+    "tinea_manuum": "",
+    "tinea_pedis": "nấm chân",
+    "tinea_unguium": "nấm móng tay móng chân",
+    "tinea_versicolor": "bệnh lang ben",
+    "urticaria": "phát ban",
+    "urticaria_papular": "nổi mề đay",
+    "varicella": "thủy đậu",
+    "verruca_plana": "mụn cóc phẳng",
+    "verruca_vulgaris": "mụn cóc thông thường",
+    "vitiligo": "bệnh bạch biến"
+}
+trans_body = {
+    "head": "đầu",
+    "neck": "cổ",
+    "hand": "tay",
+    "arm": "cánh tay",
+    "leg": "chân",
+    "foot": "bàn chân",
+    "back": "lưng",
+    "chest": "ngực",
+    "abdomen": "bụng",
+    "face": "mặt",
+    "ear": "tai",
+    "eye": "mắt",
+    "nose": "mũi",
+    "mouth": "miệng",
+    "lip": "môi",
+    "cheek": "má",
+    "tongue": "lưỡi",
+    "throat": "cổ họng",
+    "forehead": "trán",
+    "chin": "cằm",
+    "unknown" : "bộ phận chưa rõ"
+}
 def detect_skin_disease(image):
-    trans_disease = {
-        "acne": "mụn",
-        "actinic_keratosis": "chứng dày sừng quang hóa",
-        "alopecia_androgenetica": "chứng rụng tóc nội tiết tố androgen",
-        "alopecia_areata": "chứng rụng tóc từng vùng",
-        "bullous_dermatosis": "bệnh da bọng nước",
-        "chloasma": "nám da",
-        "corn": "chứng chai da",
-        "dermatofibroma": "u xơ da",
-        "eczema_dermatitis": "viêm da chàm",
-        "erysipelas": "viêm quầng",
-        "erythema_multiforme": "ban đỏ đa dạng",
-        "folliculitis": "viêm nang lông",
-        "furuncle": "mụn nhọt",
-        "haemangioma": "bệnh u máu",
-        "herpes": "mụn rộp",
-        "herpes_simplex": "nhiễm trùng do virus Herpes Simplex",
-        "iga_vasculitis": "viêm mạch máu Iga",
-        "keloid": "sẹo lồi",
-        "keratosis_follicularism": "bệnh nang lông dày sừng",
-        "lichen_planus": "bệnh lichen phẳng",
-        "lupus_erythematosus": "bệnh ban đỏ",
-        "molluscum_contagiosum": "u mềm lây",
-        "nevus": "nốt ruồi",
-        "paronychia": "viêm quanh móng",
-        "pityriasis_alba": "bệnh vẩy phấn trắng",
-        "pityriasis_rosea": "bệnh vảy phấn hồng",
-        "prurigo_nodularis": "bệnh sẩn ngứa",
-        "psoriasis": "bệnh vẩy nến",
-        "rosacea": "bệnh trứng cá đỏ rosacea",
-        "sebaceous_cyst": "u nang bã nhờn",
-        "sebaceousnevus": "bớt tuyến bã",
-        "seborrheic_dermatitis": "viêm da tiết bã",
-        "seborrheic_keratosis": "chứng dày sừng tiết bã",
-        "skin_tag": "mụn thịt dư",
-        "stasis_dermatitis": "viêm da ứ đọng",
-        "syringoma": "u ống tuyến mồ hôi",
-        "tinea_capitis": "nấm da đầu",
-        "tinea_corporis": "nấm cơ thể",
-        "tinea_cruris": "",
-        "tinea_manuum": "",
-        "tinea_pedis": "",
-        "tinea_unguium": "",
-        "tinea_versicolor": "",
-        "urticaria": "phát ban",
-        "urticaria_papular": "nổi mề đay",
-        "varicella": "thủy đậu",
-        "verruca_plana": "mụn cóc phẳng",
-        "verruca_vulgaris": "mụn cóc thông thường",
-        "vitiligo": "bệnh bạch biến"
-    }
-    trans_body = {
-        "head": "đầu",
-        "neck": "cổ",
-        "hand": "tay",
-        "arm": "cánh tay",
-        "leg": "chân",
-        "foot": "bàn chân",
-        "back": "lưng",
-        "chest": "ngực",
-        "abdomen": "bụng",
-        "face": "mặt",
-        "ear": "tai",
-        "eye": "mắt",
-        "nose": "mũi",
-        "mouth": "miệng",
-        "lip": "môi",
-        "cheek": "má",
-        "tongue": "lưỡi",
-        "throat": "cổ họng",
-        "forehead": "trán",
-        "chin": "cằm",
-        "unknown" : "bộ phận chưa rõ"
-    }
+    
     try:
 
         # Convert NumPy array to image file-like object
@@ -118,3 +122,11 @@ def detect_skin_disease(image):
             return "Không có dữ liệu phản hồi từ API."
     except Exception as e:
         return f"Error: {str(e)}"
+def create_skin_tab() :
+    with gr.Blocks() as demo:
+        gr.Markdown("Hãy tải ảnh lên và nhấn **Run** để phân tích.")
+        inp = gr.Image(type="numpy")
+        out = gr.Text()
+        btn = gr.Button("Run")
+        btn.click(fn=detect_skin_disease, inputs=inp, outputs=out)
+    return demo
