@@ -1,6 +1,7 @@
-Color_List = ["purple", "yellow", "blue"]
 
 def Processing(Image):
+  Color_List = ["purple", "yellow", "blue"]
+
   data = pipe(Image)
 
   data = data
