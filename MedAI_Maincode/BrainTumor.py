@@ -26,7 +26,7 @@ def Processing(Image) :
 
   return Image
   
-  def create_brain_tumor_detect() :
+def create_brain_tumor_detect() :
   with gr.Blocks() as Brain_Tumor_Detect:
       gr.Markdown("Cùng kiểm tra xem bạn có khối u não không nào =)))")
       with gr.Row():
