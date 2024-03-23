@@ -1,10 +1,5 @@
-!pip install openai==1.2.0
-!pip install --upgrade openapi
-import os
-import time
-import openai
-#print(openai.VERSION)
-from openai import OpenAI
+
+
 
 model = "gpt-3.5-turbo-1106"
 #openai.api_key = "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"
