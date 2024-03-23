@@ -1,4 +1,6 @@
-
+def generateBrainTumorAI :
+  from transformers import pipeline
+  pipe = pipeline("object-detection", model="DunnBC22/yolos-tiny-Brain_Tumor_Detection")
 def Processing(Image):
   Color_List = ["purple", "yellow", "blue"]
 
