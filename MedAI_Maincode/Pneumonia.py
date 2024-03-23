@@ -1,6 +1,5 @@
 def update(image_processed):
-  #image = Image.open(image_url)
-  #image_processed = image.convert("RGB")
+
   processor = AutoImageProcessor.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
   model = AutoModelForImageClassification.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
   inputs = processor(images=image_processed, return_tensors="pt")
@@ -15,3 +14,13 @@ def update(image_processed):
     if (model.config.id2label[predicted_class_idx] == class_name) :
       return (f"{ket_qua}: {score:.0%}")
   return ""
+
+def create_Pneumonia_tab() :
+  with gr.Blocks() as demo:
+      gr.Markdown("Bạn có viêm phổi không ?")
+      with gr.Row():
+          inp = gr.Image(label= "Nhập ảnh",type="pil",scale=2)
+          out = gr.Label(label="Kết quả dự đoán")
+      btn = gr.Button("Go nào")
+      btn.click(fn=update, inputs=inp, outputs=out)
+  return demo
