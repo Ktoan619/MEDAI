@@ -49,7 +49,6 @@ def ask_assistant(user_question, thread, assistant):
 
 def assistant_response(thread, run):
   # Get the messages list from the thread
-  # history
   messages = openai_threads.messages.list(thread_id=thread.id)
   # print(messages.data)
   # Get the last message for the current run
