@@ -1,4 +1,8 @@
-
+import requests
+import gradio as gr
+from PIL import Image
+import io
+import numpy as np
 trans_disease = {
     "acne": "mụn",
     "actinic_keratosis": "chứng dày sừng quang hóa",
@@ -74,7 +78,6 @@ trans_body = {
     "unknown" : "bộ phận chưa rõ"
 }
 def detect_skin_disease(image):
-    
     try:
 
         # Convert NumPy array to image file-like object
@@ -119,7 +122,7 @@ def detect_skin_disease(image):
             return "Không có dữ liệu phản hồi từ API."
     except Exception as e:
         return f"Error: {str(e)}"
-def create_skin_tab() :
+def create_skin_tab() : 
     with gr.Blocks() as demo:
         gr.Markdown("Hãy tải ảnh lên và nhấn **Run** để phân tích.")
         inp = gr.Image(type="numpy")
