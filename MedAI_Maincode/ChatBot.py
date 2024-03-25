@@ -73,5 +73,4 @@ def create_chatbot_tab() :
   demo = gr.ChatInterface(fn=gpt_response, examples=["sùi mào gà", "đau bụng", "đau đầu", "mụn"], title="Bs.GPT",
                           description = "Trợ lý ảo - tư vấn sức khỏe", theme = "soft", submit_btn = "Gửi", retry_btn = "Thử lại",
                           undo_btn = "Quay lại", clear_btn = "Xóa toàn bộ", stop_btn = "Tạm dừng")
-  #def launch_interface:
   return demo
