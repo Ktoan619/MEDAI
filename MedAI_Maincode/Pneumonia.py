@@ -1,7 +1,13 @@
+from PIL import Image
+# Load model directly
+from transformers import AutoImageProcessor, AutoModelForImageClassification
+import gradio as gr
+processor = AutoImageProcessor.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
+model = AutoModelForImageClassification.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
 def update(image_processed):
+  #image = Image.open(image_url)
+  #image_processed = image.convert("RGB")
 
-  processor = AutoImageProcessor.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
-  model = AutoModelForImageClassification.from_pretrained("nickmuchi/vit-finetuned-chest-xray-pneumonia")
   inputs = processor(images=image_processed, return_tensors="pt")
   outputs = model(**inputs)
   logits = outputs.logits
@@ -14,8 +20,7 @@ def update(image_processed):
     if (model.config.id2label[predicted_class_idx] == class_name) :
       return (f"{ket_qua}: {score:.0%}")
   return ""
-
-def create_Pneumonia_tab() :
+def create_pneumonia_tab() :
   with gr.Blocks() as demo:
       gr.Markdown("Bạn có viêm phổi không ?")
       with gr.Row():
