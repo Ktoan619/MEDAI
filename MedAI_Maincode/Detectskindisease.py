@@ -124,9 +124,9 @@ def detect_skin_disease(image):
         return f"Error: {str(e)}"
 def create_skin_tab() : 
     with gr.Blocks() as demo:
-        gr.Markdown("Hãy tải ảnh lên và nhấn **Run** để phân tích.")
+        gr.Markdown("Hãy tải ảnh lên và nhấn **Xử Lý** để phân tích.")
         inp = gr.Image(type="numpy")
         out = gr.Text()
-        btn = gr.Button("Run")
+        btn = gr.Button("Xử Lý")
         btn.click(fn=detect_skin_disease, inputs=inp, outputs=out)
     return demo
