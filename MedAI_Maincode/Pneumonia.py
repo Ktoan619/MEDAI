@@ -22,10 +22,10 @@ def update(image_processed):
   return ""
 def create_pneumonia_tab() :
   with gr.Blocks() as demo:
-      gr.Markdown("Bạn có viêm phổi không ?")
+      gr.Markdown("Kiểm Tra Bệnh Viêm Phổi")
       with gr.Row():
-          inp = gr.Image(label= "Nhập ảnh",type="pil",scale=2)
-          out = gr.Label(label="Kết quả dự đoán")
-      btn = gr.Button("Go nào")
+          inp = gr.Image(label= "Nhập Ảnh",type="pil",scale=2)
+          out = gr.Label(label="Kết Quả Dự Đoán")
+      btn = gr.Button("Xử Lý")
       btn.click(fn=update, inputs=inp, outputs=out)
   return demo
