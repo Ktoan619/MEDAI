@@ -27,13 +27,13 @@ def Processing(Image):
   return Image
 def create_brain_tumor_detect() :
   with gr.Blocks() as Brain_Tumor_Detect:
-      gr.Markdown("Cùng kiểm tra xem bạn có khối u não không nào =)))")
+      gr.Markdown("Kiểm tra khối u não")
       with gr.Row():
 
-          inp = gr.Image(type = 'pil')
-          out = gr.Image(type = 'pil')
+          inp = gr.Image(label = "Xin nhập ảnh vào", type = 'pil')
+          out = gr.Image(lebel = "Kết quả", type = 'pil')
 
-      btn = gr.Button("Run")
+      btn = gr.Button("Xử Lý")
       btn.click(fn=Processing, inputs= inp, outputs=out)
   return Brain_Tumor_Detect
 
