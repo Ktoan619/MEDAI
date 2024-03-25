@@ -31,7 +31,7 @@ def create_brain_tumor_detect() :
       with gr.Row():
 
           inp = gr.Image(label = "Xin Nhập Ảnh Vào", type = 'pil')
-          out = gr.Image(lebel = "Kết Quả", type = 'pil')
+          out = gr.Image(label = "Kết Quả", type = 'pil')
 
       btn = gr.Button("Xử Lý")
       btn.click(fn=Processing, inputs= inp, outputs=out)
