@@ -1,5 +1,3 @@
-!pip install -q gradio
-
 from PIL import Image, ImageDraw
 from transformers import pipeline
 import datasets
