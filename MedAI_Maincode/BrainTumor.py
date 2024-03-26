@@ -27,7 +27,6 @@ def Processing(Image):
   return Image
 def create_brain_tumor_detect() :
   with gr.Blocks() as Brain_Tumor_Detect:
-      gr.Markdown("Kiểm Tra Khối U Não")
       with gr.Row():
 
           inp = gr.Image(label = "Xin Nhập Ảnh Vào", type = 'pil')
