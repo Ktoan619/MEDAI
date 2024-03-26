@@ -6,9 +6,9 @@ import openai
 from openai import OpenAI
 
 model = "gpt-3.5-turbo-1106"
-#openai.api_key = "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"
+#openai.api_key = "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"
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 #openai_client = openai.OpenAI(api_key=get_openai_key())
 openai_client = OpenAI()
@@ -36,7 +36,7 @@ def ask_assistant(user_question, thread, assistant):
   run = openai_threads.runs.create(
     thread_id=thread.id,
     assistant_id=assistant.id,
-    instructions=f'Lưu ý rằng người dùng không có kiến thức về y học, đặc biệt là vấn đề sức khỏe nên hãy giải thích câu trả lời một cách chi tiết và đơn giản.Giới hạn là 100 tokens'
+    instructions=f'Lưu ý rằng người dùng không có kiến thức về y học, đặc biệt là vấn đề sức khỏe nên hãy giải thích câu trả lời một cách chi tiết và đơn giản.Giới hạn là 300 tokens'
   )
 
   is_running = True
@@ -49,15 +49,16 @@ def ask_assistant(user_question, thread, assistant):
 
 def assistant_response(thread, run):
   # Get the messages list from the thread
+  # history
   messages = openai_threads.messages.list(thread_id=thread.id)
   # print(messages.data)
   # Get the last message for the current run
   last_message = [message for message in messages.data if message.run_id == run.id and message.role == "assistant"][-1]
   # If an assistant message is found, print it
   if last_message:
-    response = f"[Bs.GPT]: {last_message.content[0].text.value}"
+    response = f"[Bs.Hera]: {last_message.content[0].text.value}"
   else:
-    response = f"[Bs.GPT]: Xin lỗi, Tôi không chắc rằng có thể trả lời câu hỏi đó. Bạn có thể hỏi một câu khác được không?"
+    response = f"[Bs.Hera]: Xin lỗi, Tôi không chắc rằng có thể trả lời câu hỏi đó. Bạn có thể hỏi một câu khác được không?"
   return response
 assistant = create_assistant()
 thread = openai_threads.create()
@@ -69,7 +70,8 @@ def gpt_response(message,history):
   response = assistant_response(thread, run)
   return response
 def create_chatbot_tab() :
-  demo = gr.ChatInterface(fn=gpt_response, examples=["sùi mào gà", "đau bụng", "đau đầu", "mụn"], title="Bs.GPT",
+  demo = gr.ChatInterface(fn=gpt_response, examples=["sùi mào gà", "đau bụng", "đau đầu", "mụn"], title="Bs.Hera",
                           description = "Trợ lý ảo - tư vấn sức khỏe", theme = "soft", submit_btn = "Gửi", retry_btn = "Thử lại",
                           undo_btn = "Quay lại", clear_btn = "Xóa toàn bộ", stop_btn = "Tạm dừng")
+  #def launch_interface:
   return demo
