@@ -31,7 +31,9 @@ def create_brain_tumor_detect() :
 
           inp = gr.Image(label = "Xin Nhập Ảnh Vào", type = 'pil')
           out = gr.Image(label = "Kết Quả", type = 'pil')
-
+      gr.Markdown("Examples: ")
+      exam = gr.Examples(["https://drive.google.com/file/d/1eLKWaDP18JVdhnQmDzMmIgbhB9KeIpM8/view?usp=drive_link",
+                        "https://drive.google.com/file/d/1Nkx2Iq1nsvkm1c0TCJjl8kK8wekBjvpx/view?usp=drive_link"], inp)
       btn = gr.Button("Xử Lý")
       btn.click(fn=Processing, inputs= inp, outputs=out)
   return Brain_Tumor_Detect
