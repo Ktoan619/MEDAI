@@ -6,7 +6,7 @@ import openai
 from openai import OpenAI
 
 model = "gpt-3.5-turbo-1106"
-#openai.api_key = "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"
+#openai.api_key = "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"
 
 os.environ["OPENAI_API_KEY"] = "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"
 
