@@ -8,7 +8,7 @@ from openai import OpenAI
 model = "gpt-3.5-turbo-1106"
 #openai.api_key = "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"
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 #openai_client = openai.OpenAI(api_key=get_openai_key())
 openai_client = OpenAI()
@@ -69,7 +69,7 @@ def gpt_response(message,history):
   run = ask_assistant(user_question, thread, assistant)
   response = assistant_response(thread, run)
   return response
-def create_chatbot_tab() :
+def create_chatbot_tab():
   demo = gr.ChatInterface(fn=gpt_response, examples=["sùi mào gà", "đau bụng", "đau đầu", "mụn"], title="Bs.Hera",
                           description = "Trợ lý ảo - tư vấn sức khỏe", theme = "soft", submit_btn = "Gửi", retry_btn = "Thử lại",
                           undo_btn = "Quay lại", clear_btn = "Xóa toàn bộ", stop_btn = "Tạm dừng")
