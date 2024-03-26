@@ -22,7 +22,6 @@ def update(image_processed):
   return ""
 def create_pneumonia_tab() :
   with gr.Blocks() as demo:
-      gr.Markdown("Kiểm Tra Bệnh Viêm Phổi")
       with gr.Row():
           inp = gr.Image(label= "Nhập Ảnh",type="pil",scale=2)
           out = gr.Label(label="Kết Quả Dự Đoán")
