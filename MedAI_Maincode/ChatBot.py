@@ -8,7 +8,7 @@ from openai import OpenAI
 model = "gpt-3.5-turbo-1106"
 #openai.api_key = "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"
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 #openai_client = openai.OpenAI(api_key=get_openai_key())
 openai_client = OpenAI()
