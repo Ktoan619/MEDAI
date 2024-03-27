@@ -8,7 +8,7 @@ from openai import OpenAI
 model = "gpt-3.5-turbo-1106"
 #openai.api_key = "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"
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 #openai_client = openai.OpenAI(api_key=get_openai_key())
 openai_client = OpenAI()
@@ -36,7 +36,7 @@ def ask_assistant(user_question, thread, assistant):
   run = openai_threads.runs.create(
     thread_id=thread.id,
     assistant_id=assistant.id,
-    instructions=f'Lưu ý rằng người dùng không có kiến thức về y học, đặc biệt là vấn đề sức khỏe nên hãy giải thích câu trả lời một cách chi tiết và đơn giản.Giới hạn là 300 tokens'
+    instructions=f'Lưu ý rằng người dùng không có kiến thức về y học, đặc biệt là vấn đề sức khỏe nên hãy giải thích câu trả lời một cách chi tiết, đơn giản và chính xác.Giới hạn là 300 tokens'
   )
 
   is_running = True
