@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 from transformers import pipeline
 import datasets
 import gradio as gr
-
+import os
 from datasets import load_dataset
 
 data = load_dataset("Francesco/brain-tumor-m2pbp")
@@ -29,12 +29,10 @@ def create_brain_tumor_detect() :
   with gr.Blocks() as Brain_Tumor_Detect:
       with gr.Row():
 
-          inp = gr.Image(label = "Xin Nhập Ảnh Vào", type = 'pil')
+          inp = gr.Image(label = "Xin Nhập Ảnh Vào", type = 'pil', height=512, width=512,
+          value=os.path.join(os.path.dirname(__file__), "../Image/braintt.jpg"),interactive=True)
           out = gr.Image(label = "Kết Quả", type = 'pil')
       gr.Markdown("Examples: ")
-      exam = gr.Examples(["https://drive.google.com/file/d/1eLKWaDP18JVdhnQmDzMmIgbhB9KeIpM8/view?usp=drive_link",
-                        "https://drive.google.com/file/d/1Nkx2Iq1nsvkm1c0TCJjl8kK8wekBjvpx/view?usp=drive_link"], inp)
       btn = gr.Button("Xử Lý")
       btn.click(fn=Processing, inputs= inp, outputs=out)
   return Brain_Tumor_Detect
-
