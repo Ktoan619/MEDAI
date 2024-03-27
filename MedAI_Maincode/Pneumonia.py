@@ -1,4 +1,6 @@
 from PIL import Image
+import os
+
 # Load model directly
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 import gradio as gr
@@ -23,7 +25,7 @@ def update(image_processed):
 def create_pneumonia_tab() :
   with gr.Blocks() as demo:
       with gr.Row():
-          inp = gr.Image(label= "Nhập Ảnh",type="pil",scale=2)
+          inp = gr.Image(label= "Nhập Ảnh",type="pil",value=os.path.join(os.path.dirname(__file__), "../Image/viemphoi2.jpg"),interactive=True)
           out = gr.Label(label="Kết Quả Dự Đoán")
       btn = gr.Button("Xử Lý")
       btn.click(fn=update, inputs=inp, outputs=out)
