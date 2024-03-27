@@ -3,6 +3,7 @@ import gradio as gr
 from PIL import Image
 import io
 import numpy as np
+import os
 trans_disease = {
     "acne": "mụn",
     "actinic_keratosis": "chứng dày sừng quang hóa",
@@ -125,8 +126,10 @@ def detect_skin_disease(image):
 def create_skin_tab() : 
     with gr.Blocks() as demo:
         gr.Markdown("Hãy tải ảnh lên và nhấn **Xử Lý** để phân tích.")
-        inp = gr.Image(type="numpy")
-        out = gr.Text()
+        with gr.Row():
+          inp = gr.Image(type="numpy",height=512, width=512,
+          value=os.path.join(os.path.dirname(__file__), "../Image/thuydau.jpg"))
+          out = gr.Text()
         btn = gr.Button("Xử Lý")
         btn.click(fn=detect_skin_disease, inputs=inp, outputs=out)
     return demo
